@@ -21,6 +21,14 @@ export default defineConfig({
       imports: [
         'react',
         'react-router-dom',
+        {
+          'mobx-react-lite': [
+            'useObserver',
+          ],
+          mobx: [
+            'makeAutoObservable',
+          ],
+        },
       ],
     }),
     Inspect(),

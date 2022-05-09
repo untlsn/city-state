@@ -1,0 +1,8 @@
+.NavPoint::before {
+  content: '';
+  @apply bg-white h-.5 absolute -bottom-3 w-full scale-x-0 transition-transform duration-300 rounded-t-full;
+}
+
+.NavPoint:hover::before {
+  @apply scale-x-100;
+}
