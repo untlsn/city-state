@@ -1,12 +1,41 @@
 import Button from '~/components/atoms/Button';
 import letterStore from '~/store/letter';
-
-const alphabet = 'ABCDEFGHIJKLMNOPRSTUWYZ'.split('');
+import alphabetStore, { fullAlphabet } from '~/store/alphabet';
+import OutLettersLogic from '~/components/atoms/OutLettersLogic';
 
 export default function Random() {
   return (
     <main className="grid grid-cols-3 pt-20 place-items-center">
-      <div />
+      <OutLettersLogic />
+      <div className="space-y-8">
+        <p>Litery do użycia:</p>
+        <ul className="flex gap-4 flex-wrap max-w-100 text-xl">
+          {
+            fullAlphabet.map((letter) => (
+              <Observer key={letter}>
+                {() => (
+                  <li>
+                    <button
+                      type="button"
+                      className={`rounded-full h-8 w-8 text-center transition-colors ${
+                        alphabetStore.letters.includes(letter) ? 'bg-primary-main text-white' : 'bg-gray-100'}`}
+                      onClick={() => {
+                        if (alphabetStore.letters.includes(letter)) {
+                          alphabetStore.remove(letter);
+                        } else {
+                          alphabetStore.add(letter);
+                        }
+                      }}
+                    >
+                      {letter}
+                    </button>
+                  </li>
+                )}
+              </Observer>
+            ))
+          }
+        </ul>
+      </div>
       <div className="text-center space-y-2">
         <button
           type="button"
@@ -23,7 +52,7 @@ export default function Random() {
         </button>
         <Observer>
           {() => (
-            !letterStore.remain.size
+            !letterStore.remainLength
               ? <Button disabled>Brak liter</Button>
               : <Button onClick={letterStore.randLetter}>Losuj</Button>
           )}
@@ -35,19 +64,25 @@ export default function Random() {
           <Button onClick={letterStore.clear}>Wyczyść</Button>
         </div>
         <ul className="flex gap-4 flex-wrap max-w-100 text-xl">
-          {
-          alphabet.map((letter) => (
-            <Observer key={letter}>
-              {() => (
-                <li
-                  className={`rounded-full h-8 w-8 text-center transition-colors ${letterStore.used.has(letter) ? 'bg-primary-main text-white' : 'bg-gray-100'}`}
-                >
-                  {letter}
-                </li>
-              )}
-            </Observer>
-          ))
-        }
+          <Observer>
+            {() => (
+              <>
+                {
+                  alphabetStore.letters.map((letter) => (
+                    <Observer key={letter}>
+                      {() => (
+                        <li
+                          className={`rounded-full h-8 w-8 text-center transition-colors ${letterStore.used.has(letter) ? 'bg-primary-main text-white' : 'bg-gray-100'}`}
+                        >
+                          {letter}
+                        </li>
+                      )}
+                    </Observer>
+                  ))
+                }
+              </>
+            )}
+          </Observer>
         </ul>
       </div>
     </main>

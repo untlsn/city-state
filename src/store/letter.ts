@@ -1,30 +1,32 @@
-import { makeAutoObservable } from 'mobx';
 import getRandomInt from '~/helpers/getRandomInt';
-
-export const alphabet = 'ABCDEFGHIJKLMNOPRSTUWYZ'.split('');
+import alphabetStore from '~/store/alphabet';
 
 const createLetterStore = () => {
   const self = {
     letter: '',
     used: new Set<string>(),
-    remain: new Set(alphabet),
+
+    get remain() {
+      return alphabetStore.letters.filter((letter) => !self.used.has(letter));
+    },
+    get remainLength() {
+      return alphabetStore.letters.length - self.used.size;
+    },
 
     randLetter() {
-      if (!self.remain.size) return;
-      const randomInt = getRandomInt(0, self.remain.size - 1);
+      if (self.remainLength == 0) return;
+      const randomInt = getRandomInt(0, self.remainLength - 1);
       const newLetter = [...self.remain][randomInt];
 
       self.changeLetter(newLetter);
     },
     changeLetter(newLetter: string) {
       self.letter = newLetter;
-      self.remain.delete(newLetter);
       self.used.add(newLetter);
     },
     clear() {
       self.letter = '';
       self.used = new Set<string>();
-      self.remain = new Set(alphabet);
     },
   };
 

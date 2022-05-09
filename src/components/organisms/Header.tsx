@@ -14,10 +14,14 @@ export default function Header() {
         {() => (
           <div>
             {
-              !!letterStore.letter && <span>Ostatnio wylosowana: <b>{letterStore.letter}</b></span>
+              !!letterStore.letter && (
+                <span>Ostatnio wylosowana: <b>{letterStore.letter}</b></span>
+              )
             }
             {
-              !!letterStore.remain.size && <button type="button" className="p-2" onClick={letterStore.randLetter}>Losuj</button>
+              !!letterStore.remainLength && (
+                <button type="button" className="p-2" onClick={letterStore.randLetter}>Losuj</button>
+              )
             }
           </div>
         )}
