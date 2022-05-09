@@ -1,4 +1,3 @@
-import { Observer } from 'mobx-react-lite';
 import Button from '~/components/atoms/Button';
 import letterStore from '~/store/letter';
 
@@ -6,7 +5,7 @@ const alphabet = 'ABCDEFGHIJKLMNOPRSTUWYZ'.split('');
 
 export default function Random() {
   return (
-    <main className="grid grid-cols-3 pt-16 place-items-center">
+    <main className="grid grid-cols-3 pt-20 place-items-center">
       <div />
       <div className="text-center space-y-2">
         <button

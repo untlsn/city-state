@@ -23,7 +23,7 @@ export default defineConfig({
         'react-router-dom',
         {
           'mobx-react-lite': [
-            'useObserver',
+            'Observer',
           ],
           mobx: [
             'makeAutoObservable',

@@ -10,6 +10,7 @@ const createLetterStore = () => {
     remain: new Set(alphabet),
 
     randLetter() {
+      if (!self.remain.size) return;
       const randomInt = getRandomInt(0, self.remain.size - 1);
       const newLetter = [...self.remain][randomInt];
 
